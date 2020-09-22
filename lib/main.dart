@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:portfolio_pokedex/pages/homePage.dart';
 import 'package:portfolio_pokedex/pages/pokeList.dart';
 
 void main() {
@@ -17,6 +18,7 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: PokeList.id,
       routes: {
+        HomePage.id : (context) => HomePage(),
         PokeList.id : (context ) => PokeList()
       },
     );
