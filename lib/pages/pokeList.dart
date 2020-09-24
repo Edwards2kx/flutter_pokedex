@@ -11,8 +11,8 @@ class PokeList extends StatelessWidget {
     pokeHub.getPokemons();
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0.0,
+        leading: Icon(Icons.search),
+        
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10.0),

@@ -13,16 +13,20 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
+          primarySwatch: Colors.blue,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+          appBarTheme: AppBarTheme(
+              iconTheme: IconThemeData(color: Colors.black),
+              elevation: 0.0,
+              color: Colors.transparent,
+              textTheme: TextTheme(
+                subtitle2: TextStyle(color: Colors.black),
+              ))),
       initialRoute: PokeList.id,
       routes: {
-        HomePage.id : (context) => HomePage(),
-        PokeList.id : (context ) => PokeList()
+        HomePage.id: (context) => HomePage(),
+        PokeList.id: (context) => PokeList()
       },
     );
   }
 }
-
-
