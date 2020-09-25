@@ -12,7 +12,6 @@ class PokeList extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: Icon(Icons.search),
-        
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -28,14 +27,19 @@ class PokeList extends StatelessWidget {
               style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.normal),
             ),
             Container(
-              height: 80.0,
-              color: Colors.grey[300],
-              child: TextField(
-                decoration: InputDecoration(
-                  hintText: 'What Pokémon are you looking for?',
-                  prefixIcon: Icon(
-                    Icons.search,
-                    color: Colors.black,
+              height: 50.0,
+              decoration: BoxDecoration(
+                  color: Colors.grey[300],
+                  borderRadius: BorderRadius.circular(40.0)),
+              child: Center(
+                child: TextField(
+                  decoration: InputDecoration(
+                    hintText: 'What Pokémon are you looking for?',
+                    border: OutlineInputBorder(borderSide: BorderSide.none),
+                    prefixIcon: Icon(
+                      Icons.search,
+                      color: Colors.black,
+                    ),
                   ),
                 ),
               ),
@@ -43,7 +47,8 @@ class PokeList extends StatelessWidget {
             Expanded(
               child: FutureBuilder(
                 future: pokeHub.getPokemons(),
-                builder: (BuildContext context, AsyncSnapshot<List<Pokemon>> snapshot) {
+                builder: (BuildContext context,
+                    AsyncSnapshot<List<Pokemon>> snapshot) {
                   if (snapshot.hasData) {
                     return ListView.builder(
                       itemCount: snapshot.data.length,

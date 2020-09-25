@@ -57,9 +57,10 @@ class PokeCard extends StatelessWidget {
       typesIcons.add(TypeCard(typePokemon:element));
     });
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        Text('N°${pokemon.number}'),
-        Text(pokemon.name),
+        Text('N°${pokemon.number}' , style: TextStyle(color: Colors.white , fontSize: 25.0 , fontWeight: FontWeight.w200)),
+        Text(pokemon.name , style: TextStyle(color: Colors.white , fontSize: 25.0 , fontWeight: FontWeight.w800),),
         Row(
           children: typesIcons,
         )
@@ -123,7 +124,7 @@ class TypeCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
-        margin: EdgeInsets.only(right: 10.0),
+        margin: EdgeInsets.only(left: 10.0),
         height: 40.0,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(50.0),
