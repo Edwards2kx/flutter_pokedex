@@ -26,11 +26,11 @@ class DetailPage extends StatelessWidget {
             top: 0.0,
             child: _nameAndType(pokemon, screenSize),
           ),
-          Positioned(bottom: dataCardHeight - 30, child: _heroImage(pokemon)),
-          //HeaderHero(pokemon: widget.pokemon),
           Positioned(
               bottom: 0,
               child: InfoTabs(pokemon: pokemon, screenSize: screenSize)),
+          //HeaderHero(pokemon: widget.pokemon),
+          Positioned(bottom: dataCardHeight - 30, child: _heroImage(pokemon)),
         ],
       ),
     );
@@ -97,9 +97,9 @@ class InfoTabs extends StatefulWidget {
 class _InfoTabsState extends State<InfoTabs>
     with SingleTickerProviderStateMixin {
   TabController _tabController;
-
+  
   final List<Tab> myTabs = [
-    Tab(text: 'About'),
+    Tab(text: 'About' , ),
     Tab(text: 'Stats'),
     Tab(text: 'Evolution'),
   ];
@@ -108,14 +108,17 @@ class _InfoTabsState extends State<InfoTabs>
   void initState() {
     _tabController = TabController(vsync: this, length: myTabs.length);
     super.initState();
+    //_tabController.
   }
 
   @override
   Widget build(BuildContext context) {
     final screenSize = widget.screenSize;
+    final Pokemon pokemon = widget.pokemon;
+
     return Container(
       decoration: BoxDecoration(
-          color: Colors.red.withOpacity(0.5),
+          color: Colors.white,
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(50.0), topRight: Radius.circular(50.0))),
       height: screenSize.height * 0.6,
@@ -137,7 +140,7 @@ class _InfoTabsState extends State<InfoTabs>
             child: Container(
               child: TabBarView(
                 controller: _tabController,
-                children: [AboutTabPage(), StatsTabPage(), EvolutionTabPage()],
+                children: [AboutTabPage(pokemon), StatsTabPage(pokemon), EvolutionTabPage(pokemon)],
               ),
             ),
           ),

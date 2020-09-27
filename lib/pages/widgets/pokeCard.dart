@@ -68,33 +68,6 @@ class PokeCard extends StatelessWidget {
     );
   }
 
-//   Widget typeCard(String typePokemon) {
-//     return Container(
-//         padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
-//         margin: EdgeInsets.symmetric(horizontal: 10.0),
-//         height: 40.0,
-//         decoration: BoxDecoration(
-//             borderRadius: BorderRadius.circular(50.0),
-//             color: Colors.white.withOpacity(0.2),
-// ),
-//         child: Row(
-//           children: [
-//             Container(
-//               width: 40.0,
-//               decoration: BoxDecoration(
-//                 image: DecorationImage(
-//                     image: AssetImage(
-//                         '../../assets/types_icons/$typePokemon.png')),
-//               ),
-//             ),
-//             SizedBox(
-//               width: 8.0,
-//             ),
-//             Text(typePokemon, style: TextStyle(color: Colors.white),)
-//           ],
-//         ));
-//   }
-
   Widget pokeImage() {
     return Hero(
       tag: pokemon.id,

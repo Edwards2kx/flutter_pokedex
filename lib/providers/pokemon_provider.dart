@@ -60,15 +60,8 @@ class PokeHub {
 
     if (response.statusCode == 200) {
       var jsonMap = jsonDecode(response.body);
-
-      //print('respuesta ${response.body}');
-      //print('respuesta ${jsonMap['pokemon'][0]}');
-
       for (var i in jsonMap['pokemon']) {
-        //pokemons.add(Pokemon.fromJsonMap(jsonMap['pokemon'][i]));
-        //print('respuesta ${jsonMap['pokemon'][i]}');
         pokemons.add(Pokemon.fromJsonMap(i));
-        //print(i);
       }
 
       return pokemons;
@@ -84,7 +77,12 @@ class Pokemon {
   String number;
   String name;
   String img;
+  String height;
+  String weight;
+
   List<String> type = [];
+  List<dynamic> preEvolution;
+  List<dynamic> netxEvolution;
   Color backGroundColor;
 
   Pokemon({this.id, this.name, this.number, this.img});
@@ -93,6 +91,10 @@ class Pokemon {
     number = json['num'];
     name = json['name'];
     img = json['img'];
+    height = json['height'];
+    weight = json['weight'];
+    //preEvolution = json[''];
+
     type = json['type'].cast<String>();
     backGroundColor = pokemonColorMap[type[0].toString().toLowerCase()];
   }
