@@ -60,82 +60,6 @@ class PokeHub {
     }
   }
 
-  Future<List<PokeGenData>> getPokeGeneration(int generation) async {
-    int _limit = 151;
-    int _offset = 0;
-    List<PokeGenData> _pokemons = [];
-
-    switch (generation) {
-      case 1: //mew
-        _limit = 151;
-        _offset = 0;
-        break;
-      case 2: //celebi
-        _limit = 100;
-        _offset = 151;
-        break;
-      case 3:  //deoxys
-        _limit = 135;
-        _offset = 251;
-        break;                
-      case 4: //arceus
-        _limit = 107;
-        _offset = 386;
-        break;
-      case 5: //genesect
-        _limit = 156;
-        _offset = 493;
-        break;
-        case 6: //volcanion
-        _limit = 71;
-        _offset = 649;
-        break;
-        case 7: //melmetal
-        _limit = 71;
-        _offset = 721;
-        break;        
-      default:
-    }
-
-    String _pokeApiUrl =
-        'https://pokeapi.co/api/v2/pokemon?limit=$_limit&offset=$_offset';
-    var _response = await http.get(_pokeApiUrl);
-
-    try {
-      if (_response.statusCode == 200) {
-        print('se hizo la consulta');
-        var _json = jsonDecode(_response.body);
-        //print('data: ${_response.body}' );
-        for (var i in _json['results']) {
-          _pokemons.add(PokeGenData(nombre: i['name'], url: i['url']));
-        }
-        _pokemons.forEach((element) {
-          //print(element.nombre);
-        });
-      } else {
-        return [];
-      }
-      return _pokemons;
-    } catch (e) {
-      print('hubo un error');
-    }
-  }
-
-  Future<Pokemon> getPokemon(PokeGenData _getThisPokemon) async {
-    Pokemon _pokemon;
-    var _response = await http.get(_getThisPokemon.url);
-    if (_response.statusCode == 200) {
-      var _json = jsonDecode(_response.body);
-      //print(_json['name']);
-      _pokemon = Pokemon.fromJsonMap(_json);
-      //print(_response.body);
-    } else {
-      print('hubo un error al consultar un pokemon');
-    }
-
-    return _pokemon;
-  }
-
   String _url =
       'https://raw.githubusercontent.com/Biuni/PokemonGO-Pokedex/master/pokedex.json';
 
@@ -157,9 +81,10 @@ class PokeHub {
     }
   }
 
+
   Future<Evolution> getEvolutionChain() async {
     //var _response = await http.get(_url);
-    Evolution evolution = Evolution(1, 'a', 'b', 'c', 'd');
+    Evolution evolution = Evolution(1,'a','b','c','d');
     return evolution;
   }
 }
@@ -171,14 +96,7 @@ class Evolution {
   String evolution;
   String lvEvolution;
 
-  Evolution(this.id, this.evolution, this.lvEvolution, this.preEvolution,
-      this.lvPreEvolution);
-}
-
-class PokeGenData {
-  String nombre;
-  String url;
-  PokeGenData({this.nombre, this.url});
+  Evolution(this. id, this.evolution, this.lvEvolution , this.preEvolution , this.lvPreEvolution);
 }
 
 /*
@@ -190,6 +108,7 @@ json['species']['url']   =>  https://pokeapi.co/api/v2/pokemon-species/2/
 al entrar a la vista de evolucion realizar la consulta
 
 */
+
 
 class Pokemon {
   int id;
@@ -204,20 +123,16 @@ class Pokemon {
   int spAtk;
   int spDef;
   int speed;
+
+  //List<Map<String, String>> type;
+
   List<String> type = [];
   List<String> abilities = [];
   List<dynamic> preEvolution;
   List<dynamic> netxEvolution;
-  Color backGroundColor = pokemonColorMap['normal'];
+  Color backGroundColor;
 
-  Pokemon({this.id, this.name, this.number, this.img, this.type});
-
-  Pokemon.dummy() {
-    id = 000;
-    name = '???';
-    number = '???';
-    type = ['normal'];
-  }
+  Pokemon({this.id, this.name, this.number, this.img});
 
   Pokemon.fromJsonMap(Map<String, dynamic> json) {
     try {
@@ -241,6 +156,8 @@ class Pokemon {
       spAtk = json['stats'][3]['base_stat'];
       spDef = json['stats'][4]['base_stat'];
       speed = json['stats'][5]['base_stat'];
+
+      
 
       backGroundColor = pokemonColorMap[type[0].toString().toLowerCase()];
     } catch (e) {

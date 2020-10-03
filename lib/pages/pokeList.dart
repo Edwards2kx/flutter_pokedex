@@ -3,6 +3,8 @@ import 'package:portfolio_pokedex/pages/widgets/pokeCard.dart';
 import 'package:portfolio_pokedex/providers/pokemon_provider.dart';
 
 class PokeList extends StatefulWidget {
+  final generation;
+  PokeList({this.generation});
   static String id = 'PokeList';
 
   @override
@@ -31,15 +33,17 @@ class _PokeListState extends State<PokeList> {
     int _cardView = 10; //depende del tamaño de la lista de pokemons actual
 
     //print('la posicion es: ${_scrollController.offset}');
-    if(_scrollController.offset > _cardHeight * 5) {
+    if (_scrollController.offset > _cardHeight * 5) {
       print('llama mas pokemons');
     }
   }
 
+  PokeHub pokeHub = new PokeHub();
+
   @override
   Widget build(BuildContext context) {
     //PokeHub pokeHub = PokeHub();
-    PokeHub pokeHub = new PokeHub();
+
     //pokeData.runPokeAPi();
     //pokeHub.getPokemons();
     return Scaffold(
@@ -79,14 +83,17 @@ class _PokeListState extends State<PokeList> {
             ),
             Expanded(
               child: FutureBuilder(
-                future: pokeHub.runPokeAPi(),
+                //future: pokeHub.runPokeAPi(),
+                future: pokeHub.getPokeGeneration(widget.generation),
                 builder: (BuildContext context,
-                    AsyncSnapshot<List<Pokemon>> snapshot) {
+                    AsyncSnapshot<List<PokeGenData>> snapshot) {
                   if (snapshot.hasData) {
                     return ListView.builder(
                       controller: _scrollController,
                       itemCount: snapshot.data.length,
-                      itemBuilder: (context, i) => PokeCard(snapshot.data[i]),
+                      //itemBuilder: (context, i) => PokeCard(snapshot.data[i]),
+                      itemBuilder: (context, i) =>
+                          buildCardList(snapshot.data[i]),
                     );
                   } else
                     return Center(child: CircularProgressIndicator());
@@ -96,6 +103,16 @@ class _PokeListState extends State<PokeList> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget buildCardList(PokeGenData pokemon) {
+    return FutureBuilder(
+      initialData: Pokemon.dummy(),
+      future: pokeHub.getPokemon(pokemon),
+      builder: (BuildContext context, AsyncSnapshot<Pokemon> snapshot) {
+        return PokeCard(snapshot.data);
+      },
     );
   }
 }

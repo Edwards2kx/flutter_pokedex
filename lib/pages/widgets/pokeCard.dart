@@ -10,8 +10,10 @@ class PokeCard extends StatelessWidget {
     return InkWell(
       onTap: () {
         print('pulsaste sobre ${pokemon.name}');
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => DetailPage(pokemon)));
+        if (pokemon.id != 0) {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => DetailPage(pokemon)));
+        }
       },
       child: Container(
         width: 400.0,
@@ -19,7 +21,7 @@ class PokeCard extends StatelessWidget {
         //padding: EdgeInsets.symmetric(vertical: 20.0),
         margin: EdgeInsets.symmetric(vertical: 15.0),
         decoration: BoxDecoration(
-          //color: Colors.grey[300],
+//          color: Colors.grey[300],
           color: pokemon.backGroundColor,
           borderRadius: BorderRadius.circular(10.0),
           boxShadow: [
@@ -52,16 +54,25 @@ class PokeCard extends StatelessWidget {
 
   Widget pokeInfo() {
     List<Widget> typesIcons = [];
-    String _name = '${pokemon.name[0].toUpperCase()}${pokemon.name.substring(1)}';
+    String _name =
+        '${pokemon.name[0].toUpperCase()}${pokemon.name.substring(1)}';
 
     pokemon.type.forEach((element) {
-      typesIcons.add(TypeCard(typePokemon:element));
+      typesIcons.add(TypeCard(typePokemon: element));
     });
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        Text('N°${pokemon.number}' , style: TextStyle(color: Colors.white , fontSize: 25.0 , fontWeight: FontWeight.w200)),
-        Text(_name , style: TextStyle(color: Colors.white , fontSize: 25.0 , fontWeight: FontWeight.w800),),
+        Text('N°${pokemon.number}',
+            style: TextStyle(
+                color: Colors.white,
+                fontSize: 25.0,
+                fontWeight: FontWeight.w200)),
+        Text(
+          _name,
+          style: TextStyle(
+              color: Colors.white, fontSize: 25.0, fontWeight: FontWeight.w800),
+        ),
         Row(
           children: typesIcons,
         )
@@ -84,7 +95,9 @@ class PokeCard extends StatelessWidget {
           placeholder: '../../assets/pokeball_icon.png',
           // image:
           //     'https://assets.pokemon.com/assets/cms2/img/pokedex/full/00${pokemon.id}.png', //ojo aqui
-          image: pokemon.img,
+          image: pokemon.img != null
+              ? pokemon.img
+              : '../../assets/pokeball_icon.png',
           fit: BoxFit.contain,
         ),
       ),
@@ -107,7 +120,6 @@ class TypeCard extends StatelessWidget {
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
-          
           children: [
             Container(
               width: 40.0,

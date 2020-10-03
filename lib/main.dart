@@ -32,7 +32,8 @@ class MyApp extends StatelessWidget {
           
         )
       ),
-      initialRoute: PokeList.id,
+      initialRoute: HomePage.id,
+      //initialRoute: PokeList.id,
       routes: {
         HomePage.id: (context) => HomePage(),
         PokeList.id: (context) => PokeList()
