@@ -20,12 +20,13 @@ class StatsTabPage extends StatelessWidget {
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30.0),
           ),
         ),
-        StatBarItem(text: 'Hp', value: 60, barColor: Colors.red),
-        StatBarItem(text: 'Attack', value: 62, barColor: Colors.green),
-        StatBarItem(text: 'Defense', value: 63, barColor: Colors.red),
-        StatBarItem(text: 'Special Attack', value: 80, barColor: Colors.green),
-        StatBarItem(text: 'Special Defense', value: 80, barColor: Colors.red),
-        StatBarItem(text: 'Speed', value: 60, barColor: Colors.green),
+        
+        StatBarItem(text: 'Hp', value: pokemon.hp, barColor: Colors.red),
+        StatBarItem(text: 'Attack', value: pokemon.attack, barColor: Colors.green),
+        StatBarItem(text: 'Defense', value: pokemon.defense, barColor: Colors.red),
+        StatBarItem(text: 'Sp. Atk', value: pokemon.spAtk, barColor: Colors.green),
+        StatBarItem(text: 'Sp. Def.', value: pokemon.spDef, barColor: Colors.red),
+        StatBarItem(text: 'Speed', value: pokemon.speed, barColor: Colors.blue),
       ]),
     );
   }

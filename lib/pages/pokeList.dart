@@ -2,13 +2,46 @@ import 'package:flutter/material.dart';
 import 'package:portfolio_pokedex/pages/widgets/pokeCard.dart';
 import 'package:portfolio_pokedex/providers/pokemon_provider.dart';
 
-class PokeList extends StatelessWidget {
+class PokeList extends StatefulWidget {
   static String id = 'PokeList';
 
   @override
+  _PokeListState createState() => _PokeListState();
+}
+
+class _PokeListState extends State<PokeList> {
+  TrackingScrollController _scrollController;
+  @override
+  dispose() {
+    _scrollController?.removeListener(onScroll);
+
+    super.dispose();
+  }
+
+  @override
+  initState() {
+    _scrollController = TrackingScrollController();
+    _scrollController.addListener(onScroll);
+
+    super.initState();
+  }
+
+  onScroll() {
+    int _cardHeight = 150;
+    int _cardView = 10; //depende del tamaño de la lista de pokemons actual
+
+    //print('la posicion es: ${_scrollController.offset}');
+    if(_scrollController.offset > _cardHeight * 5) {
+      print('llama mas pokemons');
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    PokeHub pokeHub = PokeHub();
-    pokeHub.getPokemons();
+    //PokeHub pokeHub = PokeHub();
+    PokeHub pokeHub = new PokeHub();
+    //pokeData.runPokeAPi();
+    //pokeHub.getPokemons();
     return Scaffold(
       appBar: AppBar(
         leading: Icon(Icons.search),
@@ -46,11 +79,12 @@ class PokeList extends StatelessWidget {
             ),
             Expanded(
               child: FutureBuilder(
-                future: pokeHub.getPokemons(),
+                future: pokeHub.runPokeAPi(),
                 builder: (BuildContext context,
                     AsyncSnapshot<List<Pokemon>> snapshot) {
                   if (snapshot.hasData) {
                     return ListView.builder(
+                      controller: _scrollController,
                       itemCount: snapshot.data.length,
                       itemBuilder: (context, i) => PokeCard(snapshot.data[i]),
                     );

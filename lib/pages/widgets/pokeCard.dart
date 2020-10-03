@@ -52,6 +52,7 @@ class PokeCard extends StatelessWidget {
 
   Widget pokeInfo() {
     List<Widget> typesIcons = [];
+    String _name = '${pokemon.name[0].toUpperCase()}${pokemon.name.substring(1)}';
 
     pokemon.type.forEach((element) {
       typesIcons.add(TypeCard(typePokemon:element));
@@ -60,7 +61,7 @@ class PokeCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Text('N°${pokemon.number}' , style: TextStyle(color: Colors.white , fontSize: 25.0 , fontWeight: FontWeight.w200)),
-        Text(pokemon.name , style: TextStyle(color: Colors.white , fontSize: 25.0 , fontWeight: FontWeight.w800),),
+        Text(_name , style: TextStyle(color: Colors.white , fontSize: 25.0 , fontWeight: FontWeight.w800),),
         Row(
           children: typesIcons,
         )
@@ -81,8 +82,9 @@ class PokeCard extends StatelessWidget {
           height: 180.0,
           placeholderScale: 0.1,
           placeholder: '../../assets/pokeball_icon.png',
-          image:
-              'https://assets.pokemon.com/assets/cms2/img/pokedex/full/${pokemon.number}.png',
+          // image:
+          //     'https://assets.pokemon.com/assets/cms2/img/pokedex/full/00${pokemon.id}.png', //ojo aqui
+          image: pokemon.img,
           fit: BoxFit.contain,
         ),
       ),

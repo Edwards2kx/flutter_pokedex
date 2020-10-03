@@ -79,8 +79,9 @@ Widget _heroImage(Pokemon pokemon) {
       height: 200.0,
       placeholderScale: 0.1,
       placeholder: '../../assets/pokeball_icon.png',
-      image:
-          'https://assets.pokemon.com/assets/cms2/img/pokedex/full/${pokemon.number}.png',
+      // image:
+      //     'https://assets.pokemon.com/assets/cms2/img/pokedex/full/${pokemon.number}.png',
+      image:pokemon.img,
       fit: BoxFit.contain,
     ),
   );

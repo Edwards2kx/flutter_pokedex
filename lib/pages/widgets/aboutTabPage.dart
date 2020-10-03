@@ -4,8 +4,13 @@ import 'package:portfolio_pokedex/providers/pokemon_provider.dart';
 class AboutTabPage extends StatelessWidget {
   final Pokemon pokemon;
   AboutTabPage(this.pokemon);
+
   @override
   Widget build(BuildContext context) {
+    final String _height = (pokemon.height*10).toString() ;
+    final String _weight = (pokemon.weight/10).toString();
+    final String _abilities = pokemon.abilities.join(' , ');
+
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20.0 , vertical: 5.0),
       //color: Colors.yellow,
@@ -17,10 +22,10 @@ class AboutTabPage extends StatelessWidget {
           SizedBox(
             height: 20.0,
           ),
-          infoRow('Height', pokemon.height),
-          infoRow('Weight', pokemon.weight),
-          infoRow('Abilities', 'Overgrow , Chlorophyl'),
-          infoRow('Weakeness', 'Fight , Fire'),
+          infoRow('Height', '$_height cms'),
+          infoRow('Weight', '$_weight Kilograms'),
+          infoRow('Abilities', _abilities),
+          infoRow('Weakeness', 'Fight , Fire'), 
           
         ],
       ),
