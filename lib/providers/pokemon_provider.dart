@@ -225,6 +225,11 @@ class Pokemon {
       number = id.toString().padLeft(3, '0');
       name = json['name'];
       img = json['sprites']['other']['official-artwork']['front_default'];
+      //img = json['sprites']['other']['official-artwork']['front_default'];
+      img = 'https://assets.pokemon.com/assets/cms2/img/pokedex/detail/$number.png'; //carga mas rapido que la original
+      // if (img == null) {
+      //   img = 'https://assets.pokemon.com/assets/cms2/img/pokedex/full/$number.png';
+      // }
       //print(img);
       height = json['height'];
       weight = json['weight'];

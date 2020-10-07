@@ -4,6 +4,8 @@ import 'package:portfolio_pokedex/providers/pokemon_provider.dart';
 
 class PokeCard extends StatelessWidget {
   final Pokemon pokemon;
+  final double pokeCardWidth = 400.0;
+  final double pokeCardHeight = 120.0;
   PokeCard(this.pokemon);
   @override
   Widget build(BuildContext context) {
@@ -16,8 +18,8 @@ class PokeCard extends StatelessWidget {
         }
       },
       child: Container(
-        width: 400.0,
-        height: 120.0,
+        width: pokeCardWidth,
+        height: pokeCardHeight,
         //padding: EdgeInsets.symmetric(vertical: 20.0),
         margin: EdgeInsets.symmetric(vertical: 15.0),
         decoration: BoxDecoration(
@@ -38,6 +40,16 @@ class PokeCard extends StatelessWidget {
           children: [
             Container(), //contenedor principal
             Positioned(
+              left: pokeCardWidth / 2,
+              top: 20.0,
+              child: dots(),
+            ),
+            Positioned(
+              left:25.0,
+              //bottom: 20.0,
+              child: pokeBall(),
+            ),
+            Positioned(
               left: 10.0,
               top: -20.0,
               child: pokeImage(),
@@ -50,6 +62,28 @@ class PokeCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget dots() {
+    return Container(
+        width: pokeCardWidth / 3,
+        height: pokeCardHeight / 3,
+        //child: Image.asset('../../../assets/dotted.png')
+        child: Image.asset(
+          '../assets/dotted.png',
+          color: Colors.white.withOpacity(0.10),
+        ));
+  }
+
+  Widget pokeBall() {
+    final double size = 140.0;
+    return Container(
+        width: size,
+        height: size,
+        child: Image.asset(
+          '../assets/pokeball.png',
+          color: Colors.white.withOpacity(0.10),
+        ));
   }
 
   Widget pokeInfo() {
@@ -87,7 +121,6 @@ class PokeCard extends StatelessWidget {
         //color: Colors.red,
         //width: 180,
         height: 140,
-        //child: Image.network(pokemon.img , fit: BoxFit.contain,),
         child: FadeInImage.assetNetwork(
           width: 180.0,
           height: 180.0,

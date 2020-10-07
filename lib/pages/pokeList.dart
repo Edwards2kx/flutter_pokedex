@@ -48,7 +48,7 @@ class _PokeListState extends State<PokeList> {
     //pokeHub.getPokemons();
     return Scaffold(
       appBar: AppBar(
-        leading: Icon(Icons.search),
+        //leading: Icon(Icons.search),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10.0),

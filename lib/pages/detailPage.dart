@@ -73,16 +73,18 @@ class DetailPage extends StatelessWidget {
 
 Widget _heroImage(Pokemon pokemon) {
   return Hero(
+    //placeholderBuilder: ,
+    //flightShuttleBuilder: ,
     tag: pokemon.id,
     child: FadeInImage.assetNetwork(
-      width: 200.0,
-      height: 200.0,
+      width: 250.0,
+      height: 250.0,
       placeholderScale: 0.1,
       placeholder: '../../assets/pokeball_icon.png',
-      // image:
-      //     'https://assets.pokemon.com/assets/cms2/img/pokedex/full/${pokemon.number}.png',
       image:pokemon.img,
-      fit: BoxFit.contain,
+      //  image:
+      //      'https://assets.pokemon.com/assets/cms2/img/pokedex/full/${pokemon.number}.png',
+      fit: BoxFit.cover,
     ),
   );
 }
@@ -98,9 +100,11 @@ class InfoTabs extends StatefulWidget {
 class _InfoTabsState extends State<InfoTabs>
     with SingleTickerProviderStateMixin {
   TabController _tabController;
-  
+
   final List<Tab> myTabs = [
-    Tab(text: 'About' , ),
+    Tab(
+      text: 'About',
+    ),
     Tab(text: 'Stats'),
     Tab(text: 'Evolution'),
   ];
@@ -141,7 +145,11 @@ class _InfoTabsState extends State<InfoTabs>
             child: Container(
               child: TabBarView(
                 controller: _tabController,
-                children: [AboutTabPage(pokemon), StatsTabPage(pokemon), EvolutionTabPage(pokemon)],
+                children: [
+                  AboutTabPage(pokemon),
+                  StatsTabPage(pokemon),
+                  EvolutionTabPage(pokemon)
+                ],
               ),
             ),
           ),
