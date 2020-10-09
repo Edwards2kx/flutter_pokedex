@@ -74,10 +74,10 @@ class PokeHub {
         _limit = 100;
         _offset = 151;
         break;
-      case 3:  //deoxys
+      case 3: //deoxys
         _limit = 135;
         _offset = 251;
-        break;                
+        break;
       case 4: //arceus
         _limit = 107;
         _offset = 386;
@@ -86,14 +86,14 @@ class PokeHub {
         _limit = 156;
         _offset = 493;
         break;
-        case 6: //volcanion
+      case 6: //volcanion
         _limit = 71;
         _offset = 649;
         break;
-        case 7: //melmetal
+      case 7: //melmetal
         _limit = 71;
         _offset = 721;
-        break;        
+        break;
       default:
     }
 
@@ -157,10 +157,98 @@ class PokeHub {
     }
   }
 
-  Future<Evolution> getEvolutionChain() async {
+  Future<Evolution> getEvolutionChain(int id) async {
+    String _url = 'https://pokeapi.co/api/v2/pokemon-species/$id/';
+    String _urlEvoChain;
+    String _namePokemon;
+    String _nameEvolution;
+    String _nameEvolution2;
+    String _detailEvolution;
+    String _detailEvolution2;
+    String _triggerEvolution1;
+    String _triggerEvolution2;
+    var _response = await http.get(_url);
+    try {
+      if (_response.statusCode == 200) {
+        var _jsonMap = json.decode(_response.body);
+        _urlEvoChain = _jsonMap['evolution_chain']['url'];
+
+        var _responseEvol = await http.get(_urlEvoChain);
+        if (_responseEvol.statusCode == 200) {
+          var _jsonMap2 = json.decode(_responseEvol.body);
+          _namePokemon = _jsonMap2['chain']['species']['name'];
+          print('el pokemon base es $_namePokemon');
+          List<dynamic> element1 = _jsonMap2['chain']['evolves_to'];  //si es mayor de 1 el pokemon es multievolucion como evee
+          if (element1.isNotEmpty) {
+            _nameEvolution =
+                _jsonMap2['chain']['evolves_to'][0]['species']['name'];
+            _triggerEvolution1 = _jsonMap2['chain']['evolves_to'][0]
+                ['evolution_details'][0]['trigger']['name'];
+            print(_triggerEvolution1);
+            if (_triggerEvolution1 == 'use-item') {
+//                   print('por objeto');
+              _detailEvolution = _jsonMap2['chain']['evolves_to'][0]
+                  ['evolution_details'][0]['item']['name'];
+            } else if (_triggerEvolution1 == 'level-up') {
+              //if min level es null preguntar por min happiness
+//                    print('por nivel');
+              _detailEvolution = _jsonMap2['chain']['evolves_to'][0]
+                      ['evolution_details'][0]['min_level']
+                  .toString();
+            }
+
+            print(
+                'nombre de la evolución 1 $_nameEvolution mediante $_triggerEvolution1 el nivel $_detailEvolution');
+            List<dynamic> element2 =
+                _jsonMap2['chain']['evolves_to'][0]['evolves_to'];
+            //print(_jsonMap2['chain']['evolves_to'][0]['evolves_to']);
+            if (element2.isNotEmpty) {
+              _nameEvolution2 = _jsonMap2['chain']['evolves_to'][0]
+                  ['evolves_to'][0]['species']['name'];
+              _triggerEvolution2 = _jsonMap2['chain']['evolves_to'][0]
+                  ['evolves_to'][0]['evolution_details'][0]['trigger']['name'];
+              _detailEvolution2 = _jsonMap2['chain']['evolves_to'][0]
+                      ['evolves_to'][0]['evolution_details'][0]['min_level']
+                  .toString();
+              print(
+                  'nombre de la evolución 2 $_nameEvolution2 mediante $_triggerEvolution2 en el nivel $_detailEvolution2');
+            } else {
+              print('no tiene mas evoluciones');
+            }
+          } else {
+            print('no tiene mas evoluciones');
+          }
+
+          // if (_jsonMap2['evolution_details'] == []) {
+
+          // }
+          // else {
+          //   print('tiene evoluciones');
+          // }
+        } else {
+          print('hubo un error en la consulta de las evoluciones');
+        }
+        //print(_urlEvoChain);
+      } else {
+        print('hubo un error en la consulta');
+      }
+    } catch (e) {
+      print('error en la consulta de evolucion');
+    }
+
+    //if response['chain]['evolves_to'] tiene 0 items el pokemon no tiene evolucion
+    //si ya está evolucionado en ['species'] sale el pokemon base
+    //if response['chain]['evolves_to'] tiene items entonces
+    // response['chain]['evolves_to'][0]['species']['name'] para la primera evolucion
+    // response['chain]['evolves_to'][0]['evolution_details']['min_level] = int para indicar el nivel de evolucion
+    //si response['chain]['evolves_to'][0]['evolves_to][0]['species']['name']
+    //si response['chain]['evolves_to'][0]['evolves_to][0]['evolution_details']['min_level']
+    // si el min_level == null se debe mirar item a ver si no es null
+    //
+    // response['chain]['evolves_to'][0]['evolution_details']['min_level] = int para indicar el nivel de evolucion
     //var _response = await http.get(_url);
-    Evolution evolution = Evolution(1, 'a', 'b', 'c', 'd');
-    return evolution;
+    //Evolution evolution = Evolution(1, 'a', 'b', 'c', 'd');
+    //return Evolution();
   }
 }
 
@@ -226,7 +314,8 @@ class Pokemon {
       name = json['name'];
       img = json['sprites']['other']['official-artwork']['front_default'];
       //img = json['sprites']['other']['official-artwork']['front_default'];
-      img = 'https://assets.pokemon.com/assets/cms2/img/pokedex/detail/$number.png'; //carga mas rapido que la original
+      img =
+          'https://assets.pokemon.com/assets/cms2/img/pokedex/detail/$number.png'; //carga mas rapido que la original
       // if (img == null) {
       //   img = 'https://assets.pokemon.com/assets/cms2/img/pokedex/full/$number.png';
       // }

@@ -80,7 +80,7 @@ Widget _heroImage(Pokemon pokemon) {
       width: 250.0,
       height: 250.0,
       placeholderScale: 0.1,
-      placeholder: '../../assets/pokeball_icon.png',
+      placeholder: 'assets/pokeball_icon.png',
       image:pokemon.img,
       //  image:
       //      'https://assets.pokemon.com/assets/cms2/img/pokedex/full/${pokemon.number}.png',

@@ -105,7 +105,7 @@ class GenerationCard extends StatelessWidget {
                   SizedBox(height: 10.0,),
                   Container(
                     child: Image.asset(
-                      '../assets/generation_img/Generation_$generation.jpg',
+                      'assets/generation_img/Generation_$generation.jpg',
                       height: 80.0,
                     ),
                   ),
@@ -115,7 +115,7 @@ class GenerationCard extends StatelessWidget {
                 right: 0.0,
                 bottom: 0.0,
                 child: Image.asset(
-                  '../assets/pokeball.png',
+                  'assets/pokeball.png',
                   width: 100.0,
                   color: Colors.black.withOpacity(0.1),
                 ),

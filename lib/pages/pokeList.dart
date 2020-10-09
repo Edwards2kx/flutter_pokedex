@@ -34,7 +34,7 @@ class _PokeListState extends State<PokeList> {
 
     //print('la posicion es: ${_scrollController.offset}');
     if (_scrollController.offset > _cardHeight * 5) {
-      print('llama mas pokemons');
+      //print('llama mas pokemons');
     }
   }
 

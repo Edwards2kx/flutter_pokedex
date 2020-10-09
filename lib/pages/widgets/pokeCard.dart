@@ -70,7 +70,7 @@ class PokeCard extends StatelessWidget {
         height: pokeCardHeight / 3,
         //child: Image.asset('../../../assets/dotted.png')
         child: Image.asset(
-          '../assets/dotted.png',
+          'assets/dotted.png',
           color: Colors.white.withOpacity(0.10),
         ));
   }
@@ -81,7 +81,7 @@ class PokeCard extends StatelessWidget {
         width: size,
         height: size,
         child: Image.asset(
-          '../assets/pokeball.png',
+          'assets/pokeball.png',
           color: Colors.white.withOpacity(0.10),
         ));
   }
@@ -125,12 +125,12 @@ class PokeCard extends StatelessWidget {
           width: 180.0,
           height: 180.0,
           placeholderScale: 0.1,
-          placeholder: '../../assets/pokeball_icon.png',
+          placeholder: 'assets/pokeball_icon.png',
           // image:
           //     'https://assets.pokemon.com/assets/cms2/img/pokedex/full/00${pokemon.id}.png', //ojo aqui
           image: pokemon.img != null
               ? pokemon.img
-              : '../../assets/pokeball_icon.png',
+              : 'assets/pokeball_icon.png',
           fit: BoxFit.contain,
         ),
       ),
@@ -159,7 +159,7 @@ class TypeCard extends StatelessWidget {
               decoration: BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage(
-                        '../../assets/types_icons/$typePokemon.png')),
+                        'assets/types_icons/$typePokemon.png')),
               ),
             ),
             SizedBox(
