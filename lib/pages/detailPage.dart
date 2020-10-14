@@ -13,7 +13,7 @@ class DetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
-    final dataCardHeight = screenSize.height * 0.6;
+    final dataCardHeight = screenSize.height * 0.5;
 
     return Scaffold(
       backgroundColor: pokemon.backGroundColor,

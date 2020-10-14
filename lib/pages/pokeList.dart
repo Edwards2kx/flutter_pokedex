@@ -42,48 +42,18 @@ class _PokeListState extends State<PokeList> {
 
   @override
   Widget build(BuildContext context) {
-    //PokeHub pokeHub = PokeHub();
 
-    //pokeData.runPokeAPi();
-    //pokeHub.getPokemons();
     return Scaffold(
       appBar: AppBar(
-        //leading: Icon(Icons.search),
-      ),
+          ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Pokédex',
-              style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold),
-            ),
-            Text(
-              'Search for Pokémon by name or using the National Pokédex number.',
-              style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.normal),
-            ),
-            Container(
-              height: 50.0,
-              decoration: BoxDecoration(
-                  color: Colors.grey[300],
-                  borderRadius: BorderRadius.circular(40.0)),
-              child: Center(
-                child: TextField(
-                  decoration: InputDecoration(
-                    hintText: 'What Pokémon are you looking for?',
-                    border: OutlineInputBorder(borderSide: BorderSide.none),
-                    prefixIcon: Icon(
-                      Icons.search,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-              ),
-            ),
+//            ...header(),
             Expanded(
               child: FutureBuilder(
-                //future: pokeHub.runPokeAPi(),
                 future: pokeHub.getPokeGeneration(widget.generation),
                 builder: (BuildContext context,
                     AsyncSnapshot<List<PokeGenData>> snapshot) {
@@ -104,6 +74,38 @@ class _PokeListState extends State<PokeList> {
         ),
       ),
     );
+  }
+
+  List<Widget> header() {
+    List<Widget> headerWidgets = [];
+    headerWidgets.add(Text(
+      'Pokédex',
+      style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold),
+    ));
+    headerWidgets.add(Text(
+      'Search for Pokémon by name or using the National Pokédex number.',
+      style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.normal),
+    ));
+
+    headerWidgets.add(Container(
+      height: 50.0,
+      decoration: BoxDecoration(
+          color: Colors.grey[300], borderRadius: BorderRadius.circular(40.0)),
+      child: Center(
+        child: TextField(
+          decoration: InputDecoration(
+            hintText: 'What Pokémon are you looking for?',
+            border: OutlineInputBorder(borderSide: BorderSide.none),
+            prefixIcon: Icon(
+              Icons.search,
+              color: Colors.black,
+            ),
+          ),
+        ),
+      ),
+    ));
+
+    return headerWidgets;
   }
 
   Widget buildCardList(PokeGenData pokemon) {
