@@ -63,6 +63,10 @@ class HomePage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [GenerationCard(5), GenerationCard(6)],
           ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [GenerationCard(7)],
+          ),
           Container(
               height: SizeConfig().getProportionalScreenHeight(10),
               child: Center(
@@ -74,96 +78,80 @@ class HomePage extends StatelessWidget {
       //body: generationListView(),
     );
   }
-
-  Widget gridGenerations() {
-    return Container(
-      child: Column(children: [
-        // Expanded(
-        //   child:
-        // ),
-        // Expanded(
-        //   child:
-        // ),
-        // Expanded(
-        //   child: Row(
-        //     children: [
-        //       GenerationCard(7),
-        //       Expanded(child: SizedBox()),
-        //     ],
-        //   ),
-        // )
-      ]),
-    );
-  }
 }
 
 class GenerationCard extends StatelessWidget {
   final int generation;
   GenerationCard(this.generation);
+
   @override
   Widget build(BuildContext context) {
     SizeConfig().init(context);
 
     return ConstrainedBox(
-      constraints: BoxConstraints(
-        minHeight: 140.0,
-        maxWidth: 350.0
-      ),
-      child: Container(
-      width: SizeConfig().getProportionalScreenWidth(45),
-//      height: SizeConfig().getProportionalScreenHeight(23),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20.0),
-          color: Colors.white,
+      constraints: BoxConstraints(minHeight: 140.0, maxWidth: 350.0),
+      child: buildCardContainer(context),
+    );
+  }
 
-        ),
-//        margin: EdgeInsets.all(SizeConfig().getProportionalScreenWidth(2.5) ), //poner maximo
-        margin: EdgeInsets.symmetric(vertical: SizeConfig().getProportionalScreenHeight(2.5) , horizontal: SizeConfig().getProportionalScreenWidth(2.5) ), //poner maximo
-        child: InkWell(
-          onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => PokeList(
-                          generation: generation,
-                        )));
-          },
-          child: Stack(
-            //overflow: Overflow.clip,
-            children: [
-              Container(),
-              Align(
-                alignment: Alignment.center,
-                child: Column(children: [
-                  Text(
-                    'generation $generation',
-                    style: TextStyle(fontSize: 20.0),
-                  ),
-                  SizedBox(
-                    height: 10.0,
-                  ),
-                  Container(
-                    child: Image.asset(
-                      'assets/generation_img/Generation_$generation.jpg',
-                      fit: BoxFit.contain,
-                      //width: SizeConfig().getProportionalScreenWidth(30),
-                      height: 100.0,
-                    ),
-                  ),
-                ]),
-              ),
-              Positioned(
-                right: 0.0,
-                bottom: 0.0,
-                child: Image.asset(
-                  'assets/pokeball.png',
-                  //width: SizeConfig().getProportionalScreenWidth(30),
-                  width: 80.0,
-                  color: Colors.black.withOpacity(0.1),
+  Container buildCardContainer(BuildContext context) {
+    final double boxHeight = 120.0;
+    return Container(
+      width: SizeConfig().getProportionalScreenWidth(45),
+      height: boxHeight,
+//        height: SizeConfig().getProportionalScreenHeight(25),
+
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20.0),
+        color: Colors.white,
+      ),
+      margin: EdgeInsets.symmetric(
+        vertical: SizeConfig().getProportionalScreenHeight(1.5),
+        horizontal: SizeConfig().getProportionalScreenWidth(2.5),
+      ), //poner maximo
+      child: InkWell(
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => PokeList(
+                        generation: generation,
+                      )));
+        },
+        child: Stack(
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          children: [
+            Container(),
+            Align(
+              alignment: Alignment.center,
+              child: Column(children: [
+                Text(
+                  'generation $generation',
+                  style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
                 ),
+                SizedBox(
+                  height: 10.0,
+                ),
+                Container(
+                  child: Image.asset(
+                    'assets/generation_img/Generation_$generation.jpg',
+                    fit: BoxFit.contain,
+                    height: boxHeight * 0.65,
+                  ),
+                ),
+              ]),
+            ),
+            Align(
+              alignment: Alignment.center,
+              child: Image.asset(
+                'assets/pokeball.png',
+                //width: SizeConfig().getProportionalScreenWidth(30),
+                //width: 250.0,
+                height: 100.0,
+                color: Colors.black.withOpacity(0.1),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

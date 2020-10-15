@@ -29,48 +29,47 @@ class _PokeListState extends State<PokeList> {
   }
 
   onScroll() {
-    int _cardHeight = 150;
-    int _cardView = 10; //depende del tamaño de la lista de pokemons actual
-
-    //print('la posicion es: ${_scrollController.offset}');
-    if (_scrollController.offset > _cardHeight * 5) {
-      //print('llama mas pokemons');
-    }
+    // if (_scrollController.offset > _cardHeight * 5) {
+    //   //print('llama mas pokemons');
+    // }
   }
 
   PokeHub pokeHub = new PokeHub();
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
-          ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-//            ...header(),
-            Expanded(
+        centerTitle: true,
+        backgroundColor: Colors.transparent,
+        title: Text(
+          'Generation ${widget.generation}',
+          style: TextStyle(
+              fontWeight: FontWeight.bold, fontSize: 20.0, color: Colors.black),
+        ),
+      ),
+      body: ConstrainedBox(
+        constraints: BoxConstraints(maxWidth: 1600.0),
               child: FutureBuilder(
-                future: pokeHub.getPokeGeneration(widget.generation),
-                builder: (BuildContext context,
-                    AsyncSnapshot<List<PokeGenData>> snapshot) {
-                  if (snapshot.hasData) {
-                    return ListView.builder(
-                      controller: _scrollController,
-                      itemCount: snapshot.data.length,
-                      //itemBuilder: (context, i) => PokeCard(snapshot.data[i]),
-                      itemBuilder: (context, i) =>
-                          buildCardList(snapshot.data[i]),
-                    );
-                  } else
-                    return Center(child: CircularProgressIndicator());
-                },
-              ),
-            )
-          ],
+          future: pokeHub.getPokeGeneration(widget.generation),
+          builder:
+              (BuildContext context, AsyncSnapshot<List<PokeGenData>> snapshot) {
+            if (snapshot.hasData) {
+              return ListView.builder(
+                controller: _scrollController,
+                itemCount: snapshot.data.length,
+                itemBuilder: (context, i) => buildCardList(snapshot.data[i]),
+              );
+            } else
+              return Center(
+                child: Column(
+                  children: [
+                    CircularProgressIndicator(),
+                    Text('Check your internet connection...'),
+                  ],
+                ),
+              );
+          },
         ),
       ),
     );
