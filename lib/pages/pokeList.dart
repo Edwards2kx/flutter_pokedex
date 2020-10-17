@@ -4,7 +4,7 @@ import 'package:portfolio_pokedex/providers/pokemon_provider.dart';
 
 class PokeList extends StatefulWidget {
   final generation;
-  PokeList({this.generation});
+  PokeList({this.generation = 1});
   static String id = 'PokeList';
 
   @override
@@ -38,22 +38,35 @@ class _PokeListState extends State<PokeList> {
 
   @override
   Widget build(BuildContext context) {
+    //final int generation = widget.generation;
+    final dynamic arg = ModalRoute.of(context).settings.arguments;
+    int generation = arg[0];
+    
+    // try {
+    //   if (generation == null) {
+    //   generation = 1;
+    // }
+
+    // } catch (e) {}
+    
+    
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Colors.transparent,
         title: Text(
-          'Generation ${widget.generation}',
+          'Generation $generation',
           style: TextStyle(
               fontWeight: FontWeight.bold, fontSize: 20.0, color: Colors.black),
         ),
       ),
       body: ConstrainedBox(
         constraints: BoxConstraints(maxWidth: 1600.0),
-              child: FutureBuilder(
-          future: pokeHub.getPokeGeneration(widget.generation),
-          builder:
-              (BuildContext context, AsyncSnapshot<List<PokeGenData>> snapshot) {
+        child: FutureBuilder(
+          future: pokeHub.getPokeGeneration(generation),
+          builder: (BuildContext context,
+              AsyncSnapshot<List<PokeGenData>> snapshot) {
             if (snapshot.hasData) {
               return ListView.builder(
                 controller: _scrollController,

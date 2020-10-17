@@ -1,5 +1,6 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
+import 'package:portfolio_pokedex/pages/detailPage.dart';
 import 'package:portfolio_pokedex/pages/homePage.dart';
 import 'package:portfolio_pokedex/pages/pokeList.dart';
 
@@ -9,7 +10,7 @@ void main() => runApp(DevicePreview(
 
 //para scafold oxFFF2F2F2
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+  // This widget is the root of your application.  
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -37,7 +38,9 @@ class MyApp extends StatelessWidget {
       //initialRoute: PokeList.id,
       routes: {
         HomePage.id: (context) => HomePage(),
-        PokeList.id: (context) => PokeList()
+        PokeList.id: (context) => PokeList(),
+        //DetailPage.id : (context) => DetailPage(),
+
       },
     );
   }

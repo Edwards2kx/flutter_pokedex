@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:portfolio_pokedex/pages/detailPage.dart';
 import 'package:portfolio_pokedex/providers/pokemon_provider.dart';
+import 'package:portfolio_pokedex/ui/size_config.dart';
 
 class PokeCard extends StatelessWidget {
   final Pokemon pokemon;
-  final double pokeCardWidth = 300.0;
-  final double pokeCardHeight = 140.0;
   PokeCard(this.pokemon);
+  double pokeCardWidth = 300.0;
+  double pokeCardHeight = 140.0;
+
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
+    pokeCardWidth = SizeConfig.screenWidth.clamp(200, 600);
+
     return LimitedBox(
       maxWidth: 200.0,
       //margin: EdgeInsets.all(10.0),
@@ -25,13 +30,13 @@ class PokeCard extends StatelessWidget {
     );
   }
 
-  Container makePokeCard( ) {
+  Container makePokeCard() {
     return Container(
 //          constraints: BoxConstraints.expand(),
 //          width: pokeCardWidth,
       height: pokeCardHeight,
       //padding: EdgeInsets.symmetric(vertical: 20.0),
-      margin: EdgeInsets.symmetric(vertical: 15.0),
+      margin: EdgeInsets.symmetric(vertical: 15.0, horizontal: 5.0),
       decoration: BoxDecoration(
 //          color: Colors.grey[300],
         color: pokemon.backGroundColor,
@@ -89,7 +94,7 @@ class PokeCard extends StatelessWidget {
   Widget pokeBall() {
 //    final double size = 190.0;
     return Container(
-  //      width: size,
+        //      width: size,
         height: pokeCardHeight,
         child: Image.asset(
           'assets/pokeball.png',
@@ -118,9 +123,20 @@ class PokeCard extends StatelessWidget {
           style: TextStyle(
               color: Colors.white, fontSize: 25.0, fontWeight: FontWeight.w800),
         ),
-        Row(
-          children: typesIcons,
-        )
+        
+        Container(
+          //color: Colors.red[100],
+          padding: EdgeInsets.symmetric(vertical: 5.0),
+          width: pokeCardWidth * 0.40 ,
+          child: FittedBox(
+            alignment: Alignment.topRight,
+            fit: pokemon.type.length>1 ? BoxFit.contain : BoxFit.none,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: typesIcons,
+            ),
+          ),
+        ),
       ],
     );
   }
@@ -155,23 +171,24 @@ class TypeCard extends StatelessWidget {
     return Container(
         padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
         margin: EdgeInsets.only(left: 10.0),
-        height: 40.0,
+        height: 30.0,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(50.0),
           color: Colors.white.withOpacity(0.2),
         ),
         child: Row(
-          mainAxisSize: MainAxisSize.min,
+          //
+          //direction: Axis.horizontal,
           children: [
             Container(
-              width: 40.0,
+              width: 30.0,
               decoration: BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage('assets/types_icons/$typePokemon.png')),
               ),
             ),
             SizedBox(
-              width: 8.0,
+              width: 4.0,
             ),
             Text(
               typePokemon,

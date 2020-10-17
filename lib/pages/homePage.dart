@@ -111,12 +111,14 @@ class GenerationCard extends StatelessWidget {
       ), //poner maximo
       child: InkWell(
         onTap: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => PokeList(
-                        generation: generation,
-                      )));
+          // Navigator.push(
+          //     context,
+          //     MaterialPageRoute(
+          //         builder: (context) => PokeList(
+          //               generation: generation,
+          //             )));
+
+          Navigator.pushNamed(context, PokeList.id  , arguments: [generation]);
         },
         child: Stack(
           clipBehavior: Clip.antiAliasWithSaveLayer,

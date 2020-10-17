@@ -4,16 +4,22 @@ import 'package:portfolio_pokedex/pages/widgets/evolutionTabPage.dart';
 import 'package:portfolio_pokedex/pages/widgets/statsTabPage.dart';
 import 'package:portfolio_pokedex/providers/pokemon_provider.dart';
 import 'package:portfolio_pokedex/pages/widgets/pokeCard.dart';
+import 'package:portfolio_pokedex/ui/size_config.dart';
 
 class DetailPage extends StatelessWidget {
   final Pokemon pokemon;
+  static String id = 'DetailPage';
 
   DetailPage(this.pokemon);
 
   @override
   Widget build(BuildContext context) {
+
+    SizeConfig().init(context);
+
     Size screenSize = MediaQuery.of(context).size;
-    final dataCardHeight = screenSize.height * 0.5;
+    final dataCardHeight = SizeConfig.screenHeight * 0.6;
+
 
     return Scaffold(
       backgroundColor: pokemon.backGroundColor,
@@ -30,7 +36,7 @@ class DetailPage extends StatelessWidget {
               bottom: 0,
               child: InfoTabs(pokemon: pokemon, screenSize: screenSize)),
           //HeaderHero(pokemon: widget.pokemon),
-          Positioned(bottom: dataCardHeight - 30, child: _heroImage(pokemon)),
+          Positioned(bottom: dataCardHeight - 5.0, child: _heroImage(pokemon , screenSize)),
         ],
       ),
     );
@@ -71,20 +77,21 @@ class DetailPage extends StatelessWidget {
   }
 }
 
-Widget _heroImage(Pokemon pokemon) {
+Widget _heroImage(Pokemon pokemon , Size screenSize) {
   return Hero(
     //placeholderBuilder: ,
     //flightShuttleBuilder: ,
     tag: pokemon.id,
     child: FadeInImage.assetNetwork(
-      width: 250.0,
-      height: 250.0,
+      width: screenSize.width * 0.4,
+      alignment: Alignment.bottomCenter,
+//      height: 250.0,
       placeholderScale: 0.1,
       placeholder: 'assets/pokeball_icon.png',
       image:pokemon.img,
       //  image:
       //      'https://assets.pokemon.com/assets/cms2/img/pokedex/full/${pokemon.number}.png',
-      fit: BoxFit.cover,
+      fit: BoxFit.fill,
     ),
   );
 }
@@ -133,11 +140,11 @@ class _InfoTabsState extends State<InfoTabs>
         children: [
           Container(
             color: Colors.transparent,
-            height: 100.0,
+//            height: 100.0,
             child: TabBar(
               tabs: myTabs,
               controller: _tabController,
-              labelColor: Colors.white,
+              labelColor: Colors.black,
               labelStyle: TextStyle(fontSize: 16.0),
             ),
           ),
