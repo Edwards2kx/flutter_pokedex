@@ -177,7 +177,7 @@ class TypeCard extends StatelessWidget {
           color: Colors.white.withOpacity(0.2),
         ),
         child: Row(
-          //
+          mainAxisSize: MainAxisSize.min,
           //direction: Axis.horizontal,
           children: [
             Container(

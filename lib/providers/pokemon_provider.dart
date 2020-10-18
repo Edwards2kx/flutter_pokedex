@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:portfolio_pokedex/providers/copy.dart';
 
 Map<String, Color> pokemonColorMap = {
   'normal': Color(0xFFA4ACAF),
@@ -15,7 +16,7 @@ Map<String, Color> pokemonColorMap = {
   'steel': Color(0xFF9eb7b8),
   'fire': Color(0xFFfd7d24),
   'water': Color(0xFF4592c4),
-  'grass': Color(0xFF9bcc50),
+  'grass': Color(0xFF48D0B0),
   'electric': Color(0xFFeed535),
   'psychic': Color(0xFFf366b9),
   'ice': Color(0xFF51c4e7),
@@ -157,16 +158,24 @@ class PokeHub {
     }
   }
 
-  Future<Evolution> getEvolutionChain(int id) async {
+  Future<List<Evolution>> getEvolutionChain(int id) async {
     String _url = 'https://pokeapi.co/api/v2/pokemon-species/$id/';
+    String _urlPokemonName = 'https://pokeapi.co/api/v2/pokemon/';
     String _urlEvoChain;
     String _namePokemon;
     String _nameEvolution;
     String _nameEvolution2;
-    String _detailEvolution;
+    String _detailEvolution1;
     String _detailEvolution2;
     String _triggerEvolution1;
     String _triggerEvolution2;
+    String _id;
+    String _number;
+    String _img;
+    List<String> evolutions = [];
+    List<Evolution> evolutionData = [];
+//    List<PokeGenData> evolutions;
+
     var _response = await http.get(_url);
     try {
       if (_response.statusCode == 200) {
@@ -177,8 +186,20 @@ class PokeHub {
         if (_responseEvol.statusCode == 200) {
           var _jsonMap2 = json.decode(_responseEvol.body);
           _namePokemon = _jsonMap2['chain']['species']['name'];
+          _id = _jsonMap2['chain']['species']['url'];
+          _id = _id.substring(42, _id.length - 1);
+          _number = _id.padLeft(3, '0');
+          _img =
+              'https://assets.pokemon.com/assets/cms2/img/pokedex/detail/$_number.png';
+          evolutionData.add(Evolution( id: _id , name: _namePokemon , img: _img , number: _number));
+
           print('el pokemon base es $_namePokemon');
-          List<dynamic> element1 = _jsonMap2['chain']['evolves_to'];  //si es mayor de 1 el pokemon es multievolucion como evee
+          print('la id del pokemon es $_id');
+          evolutions.add(_namePokemon);
+
+//          evolutions.add(PokeGenData(nombre: _namePokemon , ));
+          List<dynamic> element1 = _jsonMap2['chain'][
+              'evolves_to']; //si es mayor de 1 el pokemon es multievolucion como evee
           if (element1.isNotEmpty) {
             _nameEvolution =
                 _jsonMap2['chain']['evolves_to'][0]['species']['name'];
@@ -187,18 +208,27 @@ class PokeHub {
             print(_triggerEvolution1);
             if (_triggerEvolution1 == 'use-item') {
 //                   print('por objeto');
-              _detailEvolution = _jsonMap2['chain']['evolves_to'][0]
+              _detailEvolution1 = _jsonMap2['chain']['evolves_to'][0]
                   ['evolution_details'][0]['item']['name'];
             } else if (_triggerEvolution1 == 'level-up') {
               //if min level es null preguntar por min happiness
 //                    print('por nivel');
-              _detailEvolution = _jsonMap2['chain']['evolves_to'][0]
+              _detailEvolution1 = _jsonMap2['chain']['evolves_to'][0]
                       ['evolution_details'][0]['min_level']
                   .toString();
             }
+            evolutions.add(_nameEvolution);
+
+          _id = _jsonMap2['chain']['evolves_to'][0]['species']['url'];
+          _id = _id.substring(42, _id.length - 1);
+          _number = _id.padLeft(3, '0');
+          _img =
+              'https://assets.pokemon.com/assets/cms2/img/pokedex/detail/$_number.png';
+          evolutionData.add(Evolution( id: _id , name: _nameEvolution , img: _img , number: _number));
+
 
             print(
-                'nombre de la evolución 1 $_nameEvolution mediante $_triggerEvolution1 el nivel $_detailEvolution');
+                'nombre de la evolución 1 $_nameEvolution mediante $_triggerEvolution1 el nivel $_detailEvolution1');
             List<dynamic> element2 =
                 _jsonMap2['chain']['evolves_to'][0]['evolves_to'];
             //print(_jsonMap2['chain']['evolves_to'][0]['evolves_to']);
@@ -210,6 +240,19 @@ class PokeHub {
               _detailEvolution2 = _jsonMap2['chain']['evolves_to'][0]
                       ['evolves_to'][0]['evolution_details'][0]['min_level']
                   .toString();
+
+
+          _id = _jsonMap2['chain']['evolves_to'][0]['evolves_to'][0]['species']['url'];
+          _id = _id.substring(42, _id.length - 1);
+          _number = _id.padLeft(3, '0');
+          _img =
+              'https://assets.pokemon.com/assets/cms2/img/pokedex/detail/$_number.png';
+          evolutionData.add(Evolution( id: _id , name: _nameEvolution2 , img: _img , number: _number));
+
+
+
+
+              evolutions.add(_nameEvolution2);
               print(
                   'nombre de la evolución 2 $_nameEvolution2 mediante $_triggerEvolution2 en el nivel $_detailEvolution2');
             } else {
@@ -249,24 +292,67 @@ class PokeHub {
     //var _response = await http.get(_url);
     //Evolution evolution = Evolution(1, 'a', 'b', 'c', 'd');
     //return Evolution();
+
+    // var _responsePokemon = await http.get('$_urlPokemonName$_namePokemon');
+    // try {
+    //   if (_responsePokemon.statusCode == 200) {
+    //     var _jsonMap = json.decode(_responsePokemon.body);
+    //     evolutionData.add(Evolution.fromJson(
+    //       _jsonMap , _triggerEvolution1 , _detailEvolution1
+    //     ));
+    //     print(_jsonMap['name']);
+    //   }
+    // } catch (e) {
+    //   print('hubo un fallo al consultar el dato de un pokemon');
+    // }
+
+
+  for(var a in evolutionData){
+    print('id del pokemon ${a.id} numero del pokemon ${a.number} nombre del pokemon ${a.name} imagen del pokemon ${a.img}');
+  }
+    return evolutionData;
+    //return evolutions;
+    //para obtener la imagen del pokemon, consultar con el nombre al api y sacar id y url
+//regreso una lista de objetos que tiene : nombre , imagen, id, forma de evolucion (nivel o piedra), detalle evolucion(nivel o nombre piedra),
   }
 }
 
-class Evolution {
-  int id;
-  String preEvolution;
-  String lvPreEvolution;
-  String evolution;
-  String lvEvolution;
+// class Evolution {
+//   int id;
+//   String preEvolution;
+//   String lvPreEvolution;
+//   String evolution;
+//   String lvEvolution;
 
-  Evolution(this.id, this.evolution, this.lvEvolution, this.preEvolution,
-      this.lvPreEvolution);
-}
+//   Evolution(this.id, this.evolution, this.lvEvolution, this.preEvolution,
+//       this.lvPreEvolution);
+// }
 
 class PokeGenData {
   String nombre;
   String url;
   PokeGenData({this.nombre, this.url});
+}
+
+class Evolution {
+  String name;
+  String id;
+  String img;
+  String number;
+  //String trigger;
+  //String evoDetail;
+
+  //Evolution({ this.name , this.id ,  this.img ,  this.trigger ,this.evoDetail });
+  Evolution({this.name, this.id, this.img , this.number});
+
+//   Evolution.fromJson(Map<String, dynamic> json , String trigger , String evoDetail) {
+//     this.name = json['name'];
+//     this.id = json['id'];
+//     this.img = json['sprites']['other']['official-artwork']['front_default'];
+//     this.trigger = trigger;
+//     this.evoDetail = evoDetail;
+//   }
+
 }
 
 /*
@@ -278,6 +364,18 @@ json['species']['url']   =>  https://pokeapi.co/api/v2/pokemon-species/2/
 al entrar a la vista de evolucion realizar la consulta
 
 */
+
+
+Map <int , String>  generationMap  = {
+  1 : 'I',
+  2 : 'II',
+  3 : 'III',
+  4 : 'IV',
+  5 : 'V',
+  6 : 'VI',
+  7 : 'VII',
+  8 : 'VIII'
+};
 
 class Pokemon {
   int id;

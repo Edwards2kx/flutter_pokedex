@@ -13,6 +13,7 @@ class HomePage extends StatelessWidget {
     //pokeHub.getPokeGeneration(1);
     //return _testing();
     SizeConfig().init(context);
+    
     // print(
     //     'alto de pantalla : ${SizeConfig.screenHeight} /n ancho de pantalla : ${SizeConfig.screenWidth}');
     // return Scaffold(
@@ -83,9 +84,11 @@ class HomePage extends StatelessWidget {
 class GenerationCard extends StatelessWidget {
   final int generation;
   GenerationCard(this.generation);
+  //final String numberGeneration = generationMap[generation]:
 
   @override
   Widget build(BuildContext context) {
+//    final String numberGeneration = generationMap[generation];
     SizeConfig().init(context);
 
     return ConstrainedBox(
@@ -94,7 +97,9 @@ class GenerationCard extends StatelessWidget {
     );
   }
 
-  Container buildCardContainer(BuildContext context) {
+  Widget buildCardContainer(BuildContext context) {
+//    var a  = generationMap[generation];
+//    print(numberGeneration);
     final double boxHeight = 120.0;
     return Container(
       width: SizeConfig().getProportionalScreenWidth(45),
@@ -128,7 +133,9 @@ class GenerationCard extends StatelessWidget {
               alignment: Alignment.center,
               child: Column(children: [
                 Text(
-                  'generation $generation',
+//                  'generation $generation',
+              
+                  'Generation ${generationMap[generation]}',
                   style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(

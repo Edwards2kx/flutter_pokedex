@@ -14,7 +14,7 @@ class StatsTabPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 12.0),
+          padding: const EdgeInsets.symmetric(vertical: 10.0),
           child: Text(
             'Base Stats',
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30.0),
@@ -46,7 +46,7 @@ class StatBarItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10.0),
+      padding: EdgeInsets.symmetric(horizontal: 8.0),
       child: Row(
         children: [
           Expanded(

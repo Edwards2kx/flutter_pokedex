@@ -14,12 +14,10 @@ class DetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     SizeConfig().init(context);
 
     Size screenSize = MediaQuery.of(context).size;
     final dataCardHeight = SizeConfig.screenHeight * 0.6;
-
 
     return Scaffold(
       backgroundColor: pokemon.backGroundColor,
@@ -32,11 +30,14 @@ class DetailPage extends StatelessWidget {
             top: 0.0,
             child: _nameAndType(pokemon, screenSize),
           ),
+          Positioned(top: 0, child: _backGroundDecoration()),
           Positioned(
               bottom: 0,
               child: InfoTabs(pokemon: pokemon, screenSize: screenSize)),
           //HeaderHero(pokemon: widget.pokemon),
-          Positioned(bottom: dataCardHeight - 5.0, child: _heroImage(pokemon , screenSize)),
+          Positioned(
+              bottom: dataCardHeight - 10.0,
+              child: _heroImage(pokemon, screenSize)),
         ],
       ),
     );
@@ -53,7 +54,7 @@ class DetailPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                pokemon.name,
+                '${pokemon.name[0].toUpperCase()}${pokemon.name.substring(1)}',
                 style: TextStyle(
                     fontSize: 42.0,
                     color: Colors.white,
@@ -77,22 +78,35 @@ class DetailPage extends StatelessWidget {
   }
 }
 
-Widget _heroImage(Pokemon pokemon , Size screenSize) {
-  return Hero(
-    //placeholderBuilder: ,
-    //flightShuttleBuilder: ,
-    tag: pokemon.id,
-    child: FadeInImage.assetNetwork(
-      width: screenSize.width * 0.4,
-      alignment: Alignment.bottomCenter,
+Widget _backGroundDecoration() {
+  return Container();
+}
+
+Widget _heroImage(Pokemon pokemon, Size screenSize) {
+  return Container(
+    width: screenSize.width * 0.4,
+    child: Stack(children: [
+      Container(
+        child: Image.asset(
+          'assets/pokeball.png',
+          color: Colors.white.withOpacity(0.10),
+        ),
+      ),
+      Hero(
+        tag: pokemon.id,
+        child: FadeInImage.assetNetwork(
+//        width: screenSize.width * 0.4,
+          alignment: Alignment.bottomCenter,
 //      height: 250.0,
-      placeholderScale: 0.1,
-      placeholder: 'assets/pokeball_icon.png',
-      image:pokemon.img,
-      //  image:
-      //      'https://assets.pokemon.com/assets/cms2/img/pokedex/full/${pokemon.number}.png',
-      fit: BoxFit.fill,
-    ),
+          placeholderScale: 0.1,
+          placeholder: 'assets/pokeball_icon.png',
+          image: pokemon.img,
+          //  image:
+          //      'https://assets.pokemon.com/assets/cms2/img/pokedex/full/${pokemon.number}.png',
+          fit: BoxFit.fill,
+        ),
+      ),
+    ]),
   );
 }
 

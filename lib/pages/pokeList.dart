@@ -56,7 +56,7 @@ class _PokeListState extends State<PokeList> {
         centerTitle: true,
         backgroundColor: Colors.transparent,
         title: Text(
-          'Generation $generation',
+          'Generation ${generationMap[generation]}',
           style: TextStyle(
               fontWeight: FontWeight.bold, fontSize: 20.0, color: Colors.black),
         ),
@@ -76,6 +76,7 @@ class _PokeListState extends State<PokeList> {
             } else
               return Center(
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     CircularProgressIndicator(),
                     Text('Check your internet connection...'),
